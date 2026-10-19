@@ -32,8 +32,13 @@ app.get('/clientes', (req, res) => {
 });
 
 // --- RUTAS DE DRONES (PRODUCTOS) ---
-app.get('/drones', (req, res) => {
-    conexion.query('SELECT * FROM drones', (err, r) => err ? res.status(500).send(err) : res.json(r));
+app.post('/drones', (req, res) => {
+    const { nombre, modelo, precio } = req.body;
+    const sql = 'INSERT INTO drones (nombre, modelo, precio) VALUES (?, ?, ?)';
+    conexion.query(sql, [nombre, modelo, precio], (err) => {
+        if (err) return res.status(500).send(err);
+        res.send({ message: 'Dron registrado correctamente' });
+    });
 });
 
 // --- RUTAS DE VENTAS (CRUD + JOIN) ---
