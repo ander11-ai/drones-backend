@@ -31,6 +31,19 @@ app.get('/clientes', (req, res) => {
     conexion.query('SELECT * FROM clientes', (err, r) => err ? res.status(500).send(err) : res.json(r));
 });
 
+// Ruta para registrar un nuevo cliente
+app.post('/clientes', (req, res) => {
+    const { nombre, email } = req.body;
+    const sql = 'INSERT INTO clientes (nombre, email) VALUES (?, ?)';
+    conexion.query(sql, [nombre, email], (err, result) => {
+        if (err) {
+            console.error('Error al registrar cliente:', err);
+            return res.status(500).send(err);
+        }
+        res.status(201).send({ message: 'Cliente registrado correctamente', id: result.insertId });
+    });
+});
+
 // --- RUTAS DE DRONES (PRODUCTOS) ---
 app.get('/drones', (req, res) => {
     conexion.query('SELECT * FROM drones', (err, r) => err ? res.status(500).send(err) : res.json(r));
