@@ -7,9 +7,8 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
-app.use(cors()); // Habilita la comunicación con React[cite: 10, 30, 34]
+app.use(cors()); 
 
-// Si estás en local usa createConnection, si vas a la nube (Aiven) usa createPool con SSL (Guía 14)[cite: 10, 34]
 const conexion = mysql.createConnection({
     host: process.env.DB_HOST || 'localhost',
     user: process.env.DB_USER || 'root',
