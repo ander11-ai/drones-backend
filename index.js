@@ -43,7 +43,8 @@ app.post('/drones', (req, res) => {
         if (err) return res.status(500).send(err);
         res.send({ message: 'Dron registrado correctamente' });
     });
-});
+}); 
+
 
 // --- RUTAS DE VENTAS (CRUD + JOIN) ---
 app.get('/ventas', (req, res) => {
