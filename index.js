@@ -40,10 +40,13 @@ app.post('/drones', (req, res) => {
     const { nombre, modelo, precio } = req.body;
     const sql = 'INSERT INTO drones (nombre, modelo, precio) VALUES (?, ?, ?)';
     conexion.query(sql, [nombre, modelo, precio], (err) => {
-        if (err) return res.status(500).send(err);
+        if (err) {
+            console.error('Error detallado de MySQL:', err); // Esto hará que aparezca en los logs de Render
+            return res.status(500).send(err);
+        }
         res.send({ message: 'Dron registrado correctamente' });
     });
-}); 
+});
 
 
 // --- RUTAS DE VENTAS (CRUD + JOIN) ---
