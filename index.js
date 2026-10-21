@@ -25,7 +25,7 @@ conexion.connect(err => {
     console.log('Conectado exitosamente a la base de datos de Drones');
 });
 
-// --- RUTAS DE CLIENTES ---
+//  RUTAS DE CLIENTES
 app.get('/clientes', (req, res) => {
     conexion.query('SELECT * FROM clientes', (err, r) => err ? res.status(500).send(err) : res.json(r));
 });
@@ -43,7 +43,7 @@ app.post('/clientes', (req, res) => {
     });
 });
 
-// --- RUTAS DE DRONES (PRODUCTOS) ---
+// RUTAS DE DRONES (PRODUCTOS) 
 app.get('/drones', (req, res) => {
     conexion.query('SELECT * FROM drones', (err, r) => err ? res.status(500).send(err) : res.json(r));
 });
@@ -53,7 +53,7 @@ app.post('/drones', (req, res) => {
     const sql = 'INSERT INTO drones (nombre, modelo, precio) VALUES (?, ?, ?)';
     conexion.query(sql, [nombre, modelo, precio], (err) => {
         if (err) {
-            console.error('Error detallado de MySQL:', err); // Esto hará que aparezca en los logs de Render
+            console.error('Error detallado de MySQL:', err); 
             return res.status(500).send(err);
         }
         res.send({ message: 'Dron registrado correctamente' });
@@ -61,7 +61,7 @@ app.post('/drones', (req, res) => {
 });
 
 
-// --- RUTAS DE VENTAS (CRUD + JOIN) ---
+//  RUTAS DE VENTAS (CRUD + JOIN) 
 app.get('/ventas', (req, res) => {
     const sql = `
         SELECT v.id, c.nombre AS cliente, d.nombre AS dron, 
@@ -103,6 +103,18 @@ app.delete('/ventas/:id', (req, res) => {
         res.send({ message: `Venta ID ${id} eliminada correctamente` });
     });
 });
+
+const SEIS_HORAS = 1000 * 60 * 60 * 6;
+
+setInterval(async () => {
+  try {
+   
+    await pool.query('SELECT 1;'); 
+    console.log('Heartbeat: Base de datos despertada con éxito.');
+  } catch (err) {
+    console.error('Error en el heartbeat:', err.message);
+  }
+}, SEIS_HORAS);
 
 app.listen(PORT, () => {
     console.log(`Servidor de la tienda de drones corriendo en puerto ${PORT}`);

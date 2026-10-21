@@ -5,7 +5,7 @@ import ListaVentas from './components/ListaVentas';
 function App() {
     return (
         <div style={{ padding: '20px' }}>
-            <h1>Sistema de Gestión - Tienda de Drones 🛸</h1>
+            <h1>Sistema de Gestión - Tienda de Drones </h1>
             <FormularioVenta />
             <hr />
             <ListaVentas />
